@@ -1,3 +1,7 @@
+# Requirements
+- ruby 2.3.1
+- bundler
+
 # Installation instructions
 
 - clone repo
