@@ -8,7 +8,8 @@ RSpec.describe WCOptionParser, '#initialize' do
         count_words: false,
         count_chars: false,
         count_bytes: false,
-        count_longest_line_size: false
+        count_longest_line_size: false,
+        help: false
     }
   }
   context 'when user runs the program' do
@@ -33,7 +34,8 @@ RSpec.describe WCOptionParser, '#parse_argument' do
         count_words: false,
         count_chars: false,
         count_bytes: false,
-        count_longest_line_size: false
+        count_longest_line_size: false,
+        help: false
     }
   }
 

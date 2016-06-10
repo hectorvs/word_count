@@ -13,7 +13,8 @@ class WCOptionParser
       'c' => 'count_bytes',
       '-bytes' => 'count_bytes',
       'L' => 'count_longest_line_size',
-      '-max-line-length' => 'count_longest_line_size'
+      '-max-line-length' => 'count_longest_line_size',
+      '-help' => 'help'
   }
 
   attr_reader :commands_to_run, :parsed_options, :files_to_count
@@ -25,7 +26,8 @@ class WCOptionParser
         count_words: false,
         count_chars: false,
         count_bytes: false,
-        count_longest_line_size: false
+        count_longest_line_size: false,
+        help: false
     }
 
     @files_to_count = []
@@ -52,11 +54,17 @@ class WCOptionParser
 
   rescue Exception => e
     STDERR.puts e.message
-    STDERR.puts "usage..."
+    STDERR.puts "Try './wc --help' for more information."
     exit(1)
   end
 
   def run_count
+
+    if @commands_to_run[:help]
+      puts File.open("../manpage").read
+      exit(0)
+    end
+
 
     if @files_to_count.empty?
       input = ARGF.read
@@ -93,6 +101,7 @@ private
 
   def parse_argument(arg='')
 
+    #send in the argument minus the first -
     return parse_options(arg[1..arg.size-1]) if arg[0] == '-'
 
     raise "File not found: #{arg}" unless File.exists?(arg)
@@ -102,7 +111,9 @@ private
   end
 
   def parse_options(arg)
-    if arg[0] == '-' # if it has another -, then it's a longform command
+
+    # if it has another -, then it's a longform command
+    if arg[0] == '-'
       option = COMMANDS.fetch(arg, false)
       raise "wc: invalid option -- '-#{arg}'" unless option
 
