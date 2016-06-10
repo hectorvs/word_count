@@ -1,6 +1,7 @@
+require_relative './wc_engine'
 require 'set'
 
-class WordCount
+class WCOptionParser
 
   COMMANDS={
       'l' => 'count_lines',
@@ -30,7 +31,9 @@ class WordCount
     @files_to_count = []
     @parsed_options = Set.new
 
-    arguments.each do |arg|
+    # this is affecting ARGV
+    until arguments.empty?
+      arg = arguments.shift
       parse_argument(arg)
     end
 
@@ -51,6 +54,39 @@ class WordCount
     STDERR.puts e.message
     STDERR.puts "usage..."
     exit(1)
+  end
+
+  def run_count
+
+    if @files_to_count.empty?
+      input = ARGF.read
+
+      engine = WCEngine.new(input)
+
+      print "\t"
+      # newline, word, byte in that order
+      print "#{engine.count_lines}\t" if @commands_to_run[:count_lines]
+      print "#{engine.count_words}\t" if @commands_to_run[:count_words]
+      print "#{engine.count_bytes}\t" if @commands_to_run[:count_bytes]
+      print "#{engine.count_chars}\t" if @commands_to_run[:count_chars]
+      print "#{engine.count_longest_line_size}\t" if @commands_to_run[:count_longest_line_size]
+    else
+
+      @files_to_count.each do |file|
+        engine = WCEngine.new(file)
+
+        print "\t"
+        # newline, word, byte in that order
+        print "#{engine.count_lines}\t" if @commands_to_run[:count_lines]
+        print "#{engine.count_words}\t" if @commands_to_run[:count_words]
+        print "#{engine.count_bytes}\t" if @commands_to_run[:count_bytes]
+        print "#{engine.count_chars}\t" if @commands_to_run[:count_chars]
+        print "#{engine.count_longest_line_size}\t" if @commands_to_run[:count_longest_line_size]
+        puts file
+
+      end
+
+    end
   end
 
 private
