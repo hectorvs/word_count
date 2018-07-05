@@ -1,12 +1,12 @@
 language: ruby
 rvm:
- - 2.3
- install:
-   - bundle install
+  - 2.3
+install:
+  - bundle install
  
- jobs:
-   include:
-     - stage: test
-     script: 
-       - rspec spec
+jobs:
+  include:
+    - stage: test
+      script: 
+        - rspec spec
        
