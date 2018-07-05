@@ -3,7 +3,6 @@ require 'rspec'
 
 RSpec.describe WCEngine, '#count_lines' do
   it "should count the newlines in a file" do
-
     test_file = "./some_file"
 
     File.open(test_file, "w") do |f|
