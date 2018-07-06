@@ -104,17 +104,28 @@ RSpec.describe WCOptionParser, '#parse_argument' do
         w = WCOptionParser.new(['--lines', '--bytes'])
         @commands[:count_lines] = true
         @commands[:count_bytes] = true
+        
         expect(w.commands_to_run).to eq @commands
       end
 
       it 'allows a repeated longform option' do
         w = WCOptionParser.new(['--lines', '--lines'])
         @commands[:count_lines] = true
+        
         expect(w.commands_to_run).to eq @commands
       end
     end
 
     context 'mixed options' do
+      it 'allows mixed longform and shorthand options' do
+        w = WCOptionParser.new(['--lines', '-m'])
+        @commands[:count_lines] = true
+        @commands[:count_chars] = true
+        expect(w.commands_to_run).to eq @commands
+      end
+    end
+    
+    context 'repeat mixed options' do
       it 'allows mixed longform and shorthand options' do
         w = WCOptionParser.new(['--lines', '-m'])
         @commands[:count_lines] = true

@@ -25,6 +25,15 @@ RSpec.describe WCEngine, '#count_lines' do
     expect(lines).to eq 0
     `rm ./some_file`
   end
+  
+  it "repeat should count lines in an empty file as 0" do
+    `touch ./some_file`
+    wc = WCEngine.new("./some_file")
+
+    lines = wc.count_lines
+    expect(lines).to eq 0
+    `rm ./some_file`
+  end
 
   it "should also read a string" do
     wc = WCEngine.new("this is some string\nanother line\n")
