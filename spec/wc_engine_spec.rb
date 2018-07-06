@@ -12,7 +12,7 @@ RSpec.describe WCEngine, '#count_lines' do
 
     wc = WCEngine.new(test_file)
     lines = wc.count_lines
-    expect(lines).to eq 2
+    expect(lines).to eq 3
 
     File.delete(test_file)
   end
