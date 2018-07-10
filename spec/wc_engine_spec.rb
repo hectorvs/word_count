@@ -9,6 +9,8 @@ RSpec.describe WCEngine, '#count_lines' do
       f.puts "one new line"
       f.puts "two new lines"
     end
+    
+    
 
     wc = WCEngine.new(test_file)
     lines = wc.count_lines
